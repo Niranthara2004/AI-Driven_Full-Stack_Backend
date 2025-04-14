@@ -6,7 +6,8 @@ const globalErrorHandlingMiddleware = (
   res: Response,
   next: NextFunction
 ) => {
-  console.log(error);
+  console.error(error.stack); // Log the error stack for debugging
+
   if (error.name === "NotFoundError") {
     res.status(404).json({ message: error.message });
     return;
@@ -23,6 +24,8 @@ const globalErrorHandlingMiddleware = (
     res.status(403).json({ message: error.message });
     return;
   }
+
+  // Default to 500 Internal Server Error
   res.status(500).json({ message: "Internal Server Error" });
 };
 
